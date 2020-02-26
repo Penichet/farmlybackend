@@ -117,8 +117,10 @@ while True:
         # Display the packet text and rssi
         display.fill(0)
         prev_packet = packet
+       # print(int(str(prev_packet,"utf-8")))
+       # print(moisture)
         packet_text = str(prev_packet, "utf-8")
-#        print(str(prev_packet))
+
         display.text('RX: ', 0, 0, 1)
         display.text(packet_text, 25, 0, 1)
         ##########################################
@@ -150,6 +152,6 @@ while True:
            firebase.put(putLoc2,plant2, data2)
            print("Second POST Success")
         #########################################
+        display.show()
         time.sleep(30)
-    display.show()
 
