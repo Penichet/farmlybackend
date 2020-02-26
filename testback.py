@@ -4,7 +4,7 @@ from firebase import firebase
 import json
 import pyowm
 import os
-import urllib2, urllib, httplib
+import urllib
 from geopy.geocoders import Nominatim
 from functools import partial
 ########## VALUES ##############
@@ -20,7 +20,7 @@ fburl = 'https://farmlybackend.firebaseio.com'
 weatherkey = 'c20e9a80a1d0540720c98726c6658619'
 ################################
 geolocator = Nominatim(user_agent="FarmlyDevice")
-print city
+print(city)
 location = geolocator.geocode(city)
 lat = location.latitude
 long = location.longitude
@@ -32,7 +32,7 @@ owm = pyowm.OWM(weatherkey)
 location = owm.weather_at_coords(lat,long)
 localweather = location.get_weather()
 uvi = owm.uvindex_around_coords(lat,long)
-if(localweather): print "Weather get success from " + city
+if(localweather): print("Weather get success from " + city)
 # Weather api
 sunlight = uvi.get_value()
 humidity = localweather.get_humidity()
@@ -47,12 +47,12 @@ else:
 ts = str(datetime.datetime.now())
 timestamp = ts[:19]
 replaced = timestamp.replace(" ", " ")
-print replaced
+print(replaced)
 # Create Data table
 data = {"temp": temp["temp"] , "plant_moisture": moisture, "humidity": humidity,
 	 "rainfall": lastrain, "sunlight": sunlight} 
 #data = "randomshit"
-print data
+print(data)
 #nesting shit
 #plantnest = {plant : values}
 #data = {replaced : plantnest}
@@ -61,7 +61,7 @@ putLoc = '/' + user + '/' +  replaced
 #putLoc = '/' + user + '/'
 #putLoc = '/functions/update'
 #print data
-print "adding to" + putLoc
+print("adding to" + putLoc)
 
 #firebase.post(putLoc, data)
 firebase.put(putLoc, plant, data)
@@ -71,6 +71,6 @@ if(twoplants):
 	putLoc2  = '/' + user + '/' + replaced 
 	data2 = {"temp": temp["temp"] , "plant_moisture": moist2, "humidity": humidity,
 		"rainfall": lastrain, "sunlight":sunlight}	
-	print data2	
+	print(data2)	
 	firebase.put(putLoc2,plant2, data2)
 	print("Second POST Success")
